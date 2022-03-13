@@ -26,7 +26,17 @@ app.get('/', (req, res) => {
 });
 
 app.post("/artigo", (req, res) => {
-    return res.json({titulo: "Como criar API 2"});
+    const artigo = Artigo.create(req.body, (err) => {
+        if(err) return res.status(400).json({
+            error: true,
+            message: "Error: Artigo não foi cadastrado com sucesso!"
+        })
+
+        return res.status(400).json({
+            error: false,
+            message: "Artigo cadastrado com sucesso!"
+        })
+    })
 });
 
 app.listen(8080, () =>{
