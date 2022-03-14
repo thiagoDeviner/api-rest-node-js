@@ -16,3 +16,9 @@ npm install --save mongoose
 ----------------------------
 COMO RODAR O PROJETO BAIXADO 
 ----------------------------
+
+//Instalar todas as dependencias indicadas pelo package.json
+npm install
+
+//Rodar o projeto usando o nodemon
+nodemon app.js

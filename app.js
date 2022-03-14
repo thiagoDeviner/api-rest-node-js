@@ -21,9 +21,29 @@ mongoose.connect('mongodb://localhost/aPiRestJs', {
     console.log("Erro. Conexão com MongoDB não foi realizada com sucesso!");
 });
 
-app.get('/', (req, res) => {
-    return res.json({titulo: "Como criar API"});
+app.get("/", (req, res) => {    
+    Artigo.find({}).then((artigo) => {
+        return res.json(artigo);
+    }).catch((erro) => {
+        return res.status(400).json({
+            error: true,
+            message: "Nenhum artigo foi encontrado!"
+        })
+    })
 });
+
+app.get("/artigo/:id", (req, res) => {
+
+    Artigo.findOne({_id:req.params.id}).then((artigo) => {
+        return res.json(artigo);
+    }).catch((erro) => {
+        return res.status(400).json({
+            error: true,
+            message: "Nenhum artigo encontrado!"
+        })
+    })
+
+})
 
 app.post("/artigo", (req, res) => {
     const artigo = Artigo.create(req.body, (err) => {
