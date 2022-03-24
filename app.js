@@ -2,6 +2,8 @@ const express = require('express');
 
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+
 const res = require('express/lib/response');
 const req = require('express/lib/request');
 
@@ -12,16 +14,21 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    console.log("Acessou o Middleware!");
+    next();
+});
+
 mongoose.connect('mongodb://localhost/aPiRestJs', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
     console.log("Conexão com MongoDB realizada com sucesso!");
 }).catch((erro) => {
-    console.log("Erro. Conexão com MongoDB não foi realizada com sucesso!");
+    console.log("Erro: Conexão com MongoDB não foi realizada com sucesso!");
 });
 
-app.get("/", (req, res) => {    
+app.get("/artigo", (req, res) => {    
     Artigo.find({}).then((artigo) => {
         return res.json(artigo);
     }).catch((erro) => {
